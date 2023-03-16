@@ -8,11 +8,38 @@
       <h1>Grocery Shop</h1>
       <div class="top_line">
         <p id="logout">Logout</p>
-        <p>Cart 
-          <!-- <img href="../assets/cart_empty.jpg" width="80%" height="80%"> -->
+        <p>
+          Cart
+          <!-- <img src="../assets/cart_empty.jpg" width="80%" height="80%"> -->
         </p>
       </div>
     </header>
+    <div class="search">
+      <input
+        list="items"
+        id="search_bar"
+        class="search_bar"
+        placeholder="Search"
+      />
+      <datalist id="items"> </datalist>
+    </div>
+    <div class="tabs">
+      <button class="tab_item" id="all-button">All</button>
+      <button class="tab_item" id="vegetable-button">Vegetables</button>
+      <button class="tab_item" id="fruit-button">Fruits</button>
+      <button class="tab_item" id="cookware-button">Cookware</button>
+      <button class="tab_item" id="other-button">Others</button>
+    </div>
+    <div class="items" id="all-item">
+      <div class="item" id="item">
+        <p style="align-items: center;" id="item-name">Tomato</p>
+        <img src="../assets/tomato.jpg" class="item_image" id="item-image">
+        <p id="item-rate">Rs: 100/kg</p>
+        <p>Count</p>
+        <input type="number" max="10" min="0" style="width: 40px" id="count"/>
+        <button id="add-to-cart">Add to Cart</button>
+      </div>
+    </div>
     <script src="../app/homePageScript.js"></script>
   </body>
 </html>

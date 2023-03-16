@@ -6,8 +6,8 @@ const express = require("express");
 const app = express();
 app.use(express.json());
 //let user;
-const data = [];
-
+const userData = [];
+const data = require("../assets/data.json");
 const PORT = 9000;
 
 ///to send html page
@@ -31,13 +31,16 @@ app.get("/signup", (req, res) => {
 ///to verify username and password
 app.post("/auth", (req, res) => {
   let message;
-  for(let userdata in data){
-    if(req.body.Username==data[userdata].Name && req.body.Password==data[userdata].Password){
-      message=true;
+  for (let user in userData) {
+    if (
+      req.body.Username == userData[user].Name &&
+      req.body.Password == userData[user].Password
+    ) {
+      message = true;
     }
   }
-  if(message!=true){
-    message=false;
+  if (message != true) {
+    message = false;
   }
   res.json(message);
   return;
@@ -58,19 +61,24 @@ app.post("/newuser", (req, res) => {
   return;
 });
 
+app.post("/load", (req, res) => {
+  res.json(data);
+  return;
+});
+
 function userFileRead() {
-  data.length=0;
+  userData.length = 0;
   fs.createReadStream(path.join(__dirname, "../assets/user.csv"))
     .pipe(parse({ delimiter: ",", columns: true, ltrim: true }))
     .on("data", function (row) {
-      data.push(row);
+      userData.push(row);
     })
     .on("error", function (error) {
       console.log(error.message);
     })
     .on("end", function () {
-      console.log("parsed csv data:");
-      console.log(data);
+      console.log("parsed csv userData:");
+      console.log(userData);
     });
 }
 app.listen(PORT, (error) => {
