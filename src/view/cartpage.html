@@ -1,0 +1,28 @@
+<html>
+  <head>
+    <title>Grocery Shop</title>
+    <link rel="stylesheet" href="../style/homePage.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Grocery Shop</h1>
+      <div class="top_line">
+        <p id="logout">Logout</p>
+        <p id="home">
+          Back to home
+        </p>
+      </div>
+    </header>
+    <div class="items" id="all-item">
+      <div class="item" id="item">
+        <p style="align-items: center;" id="item-name">Tomato</p>
+        <img src="../assets/tomato.jpg" class="item_image" id="item-image">
+        <p id="item-rate">Rs: 100/kg</p>
+        <p>Count</p>
+        <input type="number" max="10" min="0" style="width: 40px" id="count"/>
+        <button id="add-to-cart">Add to Cart</button>
+      </div>
+    </div>
+    <script src="../app/cartPageScript.js"></script>
+  </body>
+</html>

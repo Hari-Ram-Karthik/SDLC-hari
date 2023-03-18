@@ -53,7 +53,7 @@ async function signupClick() {
               //location.reload();
             });
               if(message==="ok"){
-                alert("ok");
+                window.location = parent.window.document.location.origin + "/homepage";
               }
           }
         }

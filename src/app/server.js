@@ -28,21 +28,33 @@ app.get("/signup", (req, res) => {
   res.sendFile(path.join(__dirname, "../view/signup.html"));
 });
 
+app.get("/cart", (req, res) => {
+  app.use(express.static("./"));
+  res.sendFile(path.join(__dirname, "../view/cartpage.html"));
+});
+
 ///to verify username and password
 app.post("/auth", (req, res) => {
-  let message;
+  let isvalid;
   for (let user in userData) {
     if (
       req.body.Username == userData[user].Name &&
       req.body.Password == userData[user].Password
     ) {
-      message = true;
+      isvalid = true;
+      fs.writeFile("./assets/" + req.body.Username + ".json", "", (error) => {
+        if (error) {
+          console.log(error);
+          return;
+        }
+        console.log("hi");
+      });
     }
   }
-  if (message != true) {
-    message = false;
+  if (isvalid != true) {
+    isvalid = false;
   }
-  res.json(message);
+  res.json(isvalid);
   return;
 });
 
@@ -63,6 +75,32 @@ app.post("/newuser", (req, res) => {
 
 app.post("/load", (req, res) => {
   res.json(data);
+  return;
+});
+
+app.post("/addtocart", (req, res) => {
+  const cartData=require("../assets/"+req.body.Username+".json");
+  console.log(cartData);
+  // let data1=JSON.stringify(data);
+  // //console.log(data1[0]);
+  // for (let itemData in data) {
+  //   if (itemData == req.body.Name) {
+  //     var toWriteInFile ={
+  //       Name: data[itemData].Name,
+  //       Count: req.body.Count,
+  //     };
+  //     toWriteInFile = JSON.stringify(toWriteInFile);
+  //     console.log(toWriteInFile);
+  //     fs.appendFile("./assets/"+req.body.Username+".json",toWriteInFile+",\n",(error)=>{
+  //       if(error){
+  //         console.log(error);
+  //         return;
+  //       }
+  //       return;
+  //     })
+  //   }
+  // }
+  res.json("bye");
   return;
 });
 

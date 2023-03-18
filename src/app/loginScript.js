@@ -2,7 +2,7 @@ document.getElementById("login").addEventListener("click", loginClick);
 document.getElementById("signup").addEventListener("click", signupClick);
 let userName = document.getElementById("username");
 let password = document.getElementById("password");
-let message;
+let isvalid;
 
 /**
  *Function to login click
@@ -23,12 +23,12 @@ async function loginClick(){
   };
   await fetch("http://127.0.0.1:9000/auth", requestOptions)
   .then((response) =>response.json())
-  .then((result) => (message = result))
+  .then((result) => (isvalid = result))
   .catch((error) => {
     alert("Error couldn't read data from server", error);
     location.reload();
   });
-    if(message== true){
+    if(isvalid== true){
       window.location=parent.window.document.location.origin+"/homepage";
     }
 }
