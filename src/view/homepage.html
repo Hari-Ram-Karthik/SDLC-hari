@@ -7,11 +7,11 @@
     <header>
       <h1>Grocery Shop</h1>
       <div class="top_line">
-        <p id="logout">Logout</p>
         <p id="cart">
           Cart
           <!-- <img src="../assets/cart_empty.jpg" width="80%" height="80%"> -->
         </p>
+        <p id="logout">Logout</p>
       </div>
     </header>
     <div class="search">
@@ -36,7 +36,8 @@
         <img src="../assets/tomato.jpg" class="item_image" id="item-image">
         <p id="item-rate">Rs: 100/kg</p>
         <p>Count</p>
-        <input type="number" max="10" min="0" value="0" style="width: 40px" id="count"/>
+        <input type="number" onKeyDown="return false"  max="10" min="0" value="0" style="width: 40px" id="count"/>
+        <p style="color: red;" id="out-of-stock"></p>
         <button id="add-to-cart" onclick="addtocart(this.id)">Add to Cart</button>
       </div>
     </div>

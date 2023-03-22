@@ -55,6 +55,13 @@ function createItems(category) {
       item.before(clone);
       clone.querySelector("#item-name").innerText = data[itemData].Name;
       clone.querySelector("#item-rate").innerText = data[itemData].Rate;
+      if(data[itemData].Stock<=0){
+        clone.querySelector("#add-to-cart").setAttribute("disabled", "");
+        clone.querySelector("#out-of-stock").innerText="Out of stock";
+      }
+      else if(data[itemData].Stock<10){
+        clone.querySelector("#count").setAttribute("max", data[itemData].Stock );
+      }
       clone.querySelector("#add-to-cart").id = "add-to-cart-" + itemData;
       clone.querySelector("#count").id = "count-" + itemData;
       clone.querySelector("#item-image").src = "../assets/" + itemData + ".jpg";
@@ -168,30 +175,32 @@ function logoutButtonClick() {
 }
 
 async function addtocart(id) {
-  let count = "count-" + id.split("-")[3];
-  alert(document.getElementById(count).value);
-  alert(id);
-
+  let countId = "count-" + id.split("-")[3];
   var myHeaders = new Headers();
-  myHeaders.append("Content-Type", "application/json");
-  var raw = {
-    Username:"hari",
-    Name:id.split("-")[3],
-    Count: document.getElementById(count).value,
-  };
-  raw = JSON.stringify(raw);
-  var requestOptions = {
-    method: "POST",
-    headers: myHeaders,
-    body: raw,
-    redirect: "follow",
-  };
-  await fetch("http://127.0.0.1:9000/addtocart", requestOptions)
-  .then((response) =>response.json())
-  .then((result) => (isvalid = result))
-  .catch((error) => {
-    alert("Error couldn't read data from server", error);
-    location.reload();
-  });
-  document.getElementById(count).value = 0;
+  if( document.getElementById(countId).value>0){
+    myHeaders.append("Content-Type", "application/json");
+    var raw = {
+      Username:"hari",
+      Name:id.split("-")[3],
+      Count: document.getElementById(countId).value,
+    };
+    raw = JSON.stringify(raw);
+    var requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body: raw,
+      redirect: "follow",
+    };
+    await fetch("http://127.0.0.1:9000/addtocart", requestOptions)
+    .then((response) =>response.json())
+    .then((result) => (isvalid = result))
+    .catch((error) => {
+      alert("Error couldn't read data from server", error);
+      location.reload();
+    });
+    document.getElementById(countId).value = 0;
+  }
+ else{
+  alert("Specify quantity to add to cart");
+ }
 }

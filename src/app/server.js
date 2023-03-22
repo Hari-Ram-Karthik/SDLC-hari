@@ -42,13 +42,6 @@ app.post("/auth", (req, res) => {
       req.body.Password == userData[user].Password
     ) {
       isvalid = true;
-      fs.writeFile("./assets/" + req.body.Username + ".json", "", (error) => {
-        if (error) {
-          console.log(error);
-          return;
-        }
-        console.log("hi");
-      });
     }
   }
   if (isvalid != true) {
@@ -73,33 +66,93 @@ app.post("/newuser", (req, res) => {
   return;
 });
 
+app.post("/loadCart", (req, res) => {
+  let CartData = require("../assets/" + req.body.Username + ".json");
+  res.json(CartData);
+  return;
+});
+
 app.post("/load", (req, res) => {
   res.json(data);
   return;
 });
 
+app.post("/writeData", (req, res) => {
+  fs.writeFile(
+    "./assets/" + req.body.Username + ".json",
+    JSON.stringify(req.body.CartData),
+    (error) => {
+      if (error) {
+        console.log(error);
+        return;
+      }
+    }
+  );
+  fs.writeFile("./assets/data.json", JSON.stringify(req.body.Data), (error) => {
+    if (error) {
+      console.log(error);
+      return;
+    }
+  });
+  res.send({});
+  return;
+});
+
 app.post("/addtocart", (req, res) => {
-  const cartData=require("../assets/"+req.body.Username+".json");
-  console.log(cartData);
-  // let data1=JSON.stringify(data);
-  // //console.log(data1[0]);
-  // for (let itemData in data) {
-  //   if (itemData == req.body.Name) {
-  //     var toWriteInFile ={
-  //       Name: data[itemData].Name,
-  //       Count: req.body.Count,
-  //     };
-  //     toWriteInFile = JSON.stringify(toWriteInFile);
-  //     console.log(toWriteInFile);
-  //     fs.appendFile("./assets/"+req.body.Username+".json",toWriteInFile+",\n",(error)=>{
-  //       if(error){
-  //         console.log(error);
-  //         return;
-  //       }
-  //       return;
-  //     })
-  //   }
-  // }
+  let obj = {
+    cart: [],
+  };
+  fs.exists("./assets/" + req.body.Username + ".json", function (doesExist) {
+    if (doesExist) {
+      fs.readFile(
+        "./assets/" + req.body.Username + ".json",
+        function readFileCallback(err, data) {
+          if (err) {
+            console.log(err);
+          } else {
+            obj = JSON.parse(data);
+            let added = false;
+            for (let cartDetails in obj.cart) {
+              if (obj.cart[cartDetails].Name == req.body.Name) {
+                obj.cart[cartDetails].Count += Number(req.body.Count);
+                added = true;
+              }
+            }
+            if (!added) {
+              obj.cart.push({
+                Name: req.body.Name,
+                Count: Number(req.body.Count),
+              });
+            }
+            let json = JSON.stringify(obj);
+            fs.writeFile(
+              "./assets/" + req.body.Username + ".json",
+              json,
+              (error) => {
+                if (error) {
+                  console.log(error);
+                  return;
+                }
+              }
+            );
+          }
+        }
+      );
+    } else {
+      obj.cart.push({
+        Name: req.body.Name,
+        Count: Number(req.body.Count),
+      });
+      let json = JSON.stringify(obj);
+      console.log(json);
+      fs.writeFile("./assets/" + req.body.Username + ".json", json, (error) => {
+        if (error) {
+          console.log(error);
+          return;
+        }
+      });
+    }
+  });
   res.json("bye");
   return;
 });
