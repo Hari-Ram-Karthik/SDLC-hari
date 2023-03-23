@@ -6,6 +6,7 @@ let cookware = [];
 let others = [];
 let isvalid;
 
+document.querySelector("#search-bar").addEventListener("change", optonChange);
 document.getElementById("all-button").addEventListener("click", allButtonClick);
 document
   .getElementById("vegetable-button")
@@ -21,6 +22,8 @@ document
   .addEventListener("click", otherButtonClick);
 document.getElementById("cart").addEventListener("click", cartButtonClick);
 document.getElementById("logout").addEventListener("click", logoutButtonClick);
+let itemOptions = document.getElementById("items");
+let optionSelected = document.getElementById("search-bar");
 
 (function () {
   loadData();
@@ -42,31 +45,57 @@ async function loadData() {
       location.reload();
     });
   console.log(data);
+  itemOptions.innerHTML = "";
+  for (let itemData in data) {
+    itemOptions.innerHTML =
+      itemOptions.innerHTML + '<option value="' + data[itemData].Name + '">';
+  }
   allButtonClick();
 }
 
 function createItems(category) {
   document.getElementById("all-item").replaceChildren();
-  let itemNumber = 0;
   for (let itemData in data) {
     if (data[itemData].Category == category || category == "all") {
       let clone = item.cloneNode(true);
-      clone.id = "item" + itemNumber;
+      clone.id = "item-" + itemData;
       item.before(clone);
       clone.querySelector("#item-name").innerText = data[itemData].Name;
       clone.querySelector("#item-rate").innerText = data[itemData].Rate;
-      if(data[itemData].Stock<=0){
+      if (data[itemData].Stock <= 0) {
         clone.querySelector("#add-to-cart").setAttribute("disabled", "");
-        clone.querySelector("#out-of-stock").innerText="Out of stock";
-      }
-      else if(data[itemData].Stock<10){
-        clone.querySelector("#count").setAttribute("max", data[itemData].Stock );
+        clone.querySelector("#out-of-stock").innerText = "Out of stock";
+      } else if (data[itemData].Stock < 10) {
+        clone.querySelector("#count").setAttribute("max", data[itemData].Stock);
       }
       clone.querySelector("#add-to-cart").id = "add-to-cart-" + itemData;
       clone.querySelector("#count").id = "count-" + itemData;
       clone.querySelector("#item-image").src = "../assets/" + itemData + ".jpg";
       document.getElementById("all-item").appendChild(clone);
-      itemNumber++;
+    }
+  }
+}
+
+function optonChange() {
+  allButtonClick();
+  for (let itemData in data) {
+    if (data[itemData].Name == optionSelected.value) {
+      document.getElementById("all-item").replaceChildren();
+      let clone = item.cloneNode(true);
+      clone.id = "item-" + itemData;
+      item.before(clone);
+      clone.querySelector("#item-name").innerText = data[itemData].Name;
+      clone.querySelector("#item-rate").innerText = data[itemData].Rate;
+      if (data[itemData].Stock <= 0) {
+        clone.querySelector("#add-to-cart").setAttribute("disabled", "");
+        clone.querySelector("#out-of-stock").innerText = "Out of stock";
+      } else if (data[itemData].Stock < 10) {
+        clone.querySelector("#count").setAttribute("max", data[itemData].Stock);
+      }
+      clone.querySelector("#add-to-cart").id = "add-to-cart-" + itemData;
+      clone.querySelector("#count").id = "count-" + itemData;
+      clone.querySelector("#item-image").src = "../assets/" + itemData + ".jpg";
+      document.getElementById("all-item").appendChild(clone);
     }
   }
 }
@@ -177,11 +206,11 @@ function logoutButtonClick() {
 async function addtocart(id) {
   let countId = "count-" + id.split("-")[3];
   var myHeaders = new Headers();
-  if( document.getElementById(countId).value>0){
+  if (document.getElementById(countId).value > 0) {
     myHeaders.append("Content-Type", "application/json");
     var raw = {
-      Username:"hari",
-      Name:id.split("-")[3],
+      Username: "hari",
+      Name: id.split("-")[3],
       Count: document.getElementById(countId).value,
     };
     raw = JSON.stringify(raw);
@@ -192,15 +221,14 @@ async function addtocart(id) {
       redirect: "follow",
     };
     await fetch("http://127.0.0.1:9000/addtocart", requestOptions)
-    .then((response) =>response.json())
-    .then((result) => (isvalid = result))
-    .catch((error) => {
-      alert("Error couldn't read data from server", error);
-      location.reload();
-    });
+      .then((response) => response.json())
+      .then((result) => (isvalid = result))
+      .catch((error) => {
+        alert("Error couldn't read data from server", error);
+        location.reload();
+      });
     document.getElementById(countId).value = 0;
+  } else {
+    alert("Specify quantity to add to cart");
   }
- else{
-  alert("Specify quantity to add to cart");
- }
 }

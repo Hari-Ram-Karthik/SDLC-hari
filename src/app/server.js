@@ -73,6 +73,7 @@ app.post("/loadCart", (req, res) => {
 });
 
 app.post("/load", (req, res) => {
+  let data=require("../assets/data.json");
   res.json(data);
   return;
 });

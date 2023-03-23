@@ -66,6 +66,11 @@ header {
   width: 350px;
 }
 
+.item_image:hover{
+  height: 210px;
+  width: 360px;
+}
+
 .full {
   align-items: center;
   display: flex;
