@@ -29,6 +29,7 @@ async function loginClick(){
     location.reload();
   });
     if(isvalid== true){
+      window.localStorage.setItem("Username",userName.value);
       window.location=parent.window.document.location.origin+"/homepage";
     }
 }

@@ -47,6 +47,45 @@ app.post("/auth", (req, res) => {
   if (isvalid != true) {
     isvalid = false;
   }
+  else{
+    let obj = {
+      cart: [],
+    };
+    fs.exists("./assets/" + req.body.Username + ".json", function (doesExist) {
+      if (doesExist) {
+        fs.readFile(
+          "./assets/" + req.body.Username + ".json",
+          function readFileCallback(err, data) {
+            if (err) {
+              console.log(err);
+            } else {
+              obj = JSON.parse(data);
+              let json = JSON.stringify(obj);
+              fs.writeFile(
+                "./assets/" + req.body.Username + ".json",
+                json,
+                (error) => {
+                  if (error) {
+                    console.log(error);
+                    return;
+                  }
+                }
+              );
+            }
+          }
+        );
+      } else {
+        let json = JSON.stringify(obj);
+        console.log(json);
+        fs.writeFile("./assets/" + req.body.Username + ".json", json, (error) => {
+          if (error) {
+            console.log(error);
+            return;
+          }
+        });
+      }
+    });
+  }
   res.json(isvalid);
   return;
 });
@@ -67,8 +106,8 @@ app.post("/newuser", (req, res) => {
 });
 
 app.post("/loadCart", (req, res) => {
-  let CartData = require("../assets/" + req.body.Username + ".json");
-  res.json(CartData);
+  let cartData = require("../assets/" + req.body.Username + ".json");
+  res.json(cartData);
   return;
 });
 

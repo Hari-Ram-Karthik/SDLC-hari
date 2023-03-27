@@ -13,7 +13,7 @@ async function loadData() {
   var myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
   var raw = {
-    Username: "hari",
+    Username: window.localStorage.getItem("Username"),
   };
   raw = JSON.stringify(raw);
   var requestOptions = {
@@ -108,7 +108,7 @@ async function writeData() {
   var myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
   var raw = {
-    Username: "hari",
+    Username: window.localStorage.getItem("Username"),
     Data: data,
     CartData: cartData,
   };

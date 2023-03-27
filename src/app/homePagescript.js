@@ -64,9 +64,10 @@ function createItems(category) {
       clone.querySelector("#item-rate").innerText = data[itemData].Rate;
       if (data[itemData].Stock <= 0) {
         clone.querySelector("#add-to-cart").setAttribute("disabled", "");
-        clone.querySelector("#out-of-stock").innerText = "Out of stock";
+        clone.querySelector("#warning").innerText = "Out of stock";
       } else if (data[itemData].Stock < 10) {
         clone.querySelector("#count").setAttribute("max", data[itemData].Stock);
+        clone.querySelector("#warning").innerText = "Only "+data[itemData].Stock+" left in stock";
       }
       clone.querySelector("#add-to-cart").id = "add-to-cart-" + itemData;
       clone.querySelector("#count").id = "count-" + itemData;
@@ -88,9 +89,10 @@ function optonChange() {
       clone.querySelector("#item-rate").innerText = data[itemData].Rate;
       if (data[itemData].Stock <= 0) {
         clone.querySelector("#add-to-cart").setAttribute("disabled", "");
-        clone.querySelector("#out-of-stock").innerText = "Out of stock";
+        clone.querySelector("#warning").innerText = "Out of stock";
       } else if (data[itemData].Stock < 10) {
         clone.querySelector("#count").setAttribute("max", data[itemData].Stock);
+        clone.querySelector("#warning").innerText = "Only "+data[itemData].Stock+" left in stock";
       }
       clone.querySelector("#add-to-cart").id = "add-to-cart-" + itemData;
       clone.querySelector("#count").id = "count-" + itemData;
@@ -209,7 +211,7 @@ async function addtocart(id) {
   if (document.getElementById(countId).value > 0) {
     myHeaders.append("Content-Type", "application/json");
     var raw = {
-      Username: "hari",
+      Username: window.localStorage.getItem("Username"),
       Name: id.split("-")[3],
       Count: document.getElementById(countId).value,
     };
