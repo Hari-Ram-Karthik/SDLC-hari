@@ -47,28 +47,34 @@ async function loadData() {
 function loadCart() {
   document.getElementById("all-item").replaceChildren();
   if(cartData.cart.length==0){
+    document.getElementById("cart-empty").src="../assets/cartEmpty.jpg";
+    document.getElementById("cart-empty").setAttribute("style","width: 100%; height: 85%; margin-top: -20px")
     document.getElementById("buy-all-item").remove();
-  }
-  for (let itemData in cartData.cart) {
-    let clone = item.cloneNode(true);
-    clone.id = "item-" + cartData.cart[itemData].Name;
-    item.before(clone);
-    clone.querySelector("#item-name").innerText =
-      data[cartData.cart[itemData].Name].Name;
-    clone.querySelector("#item-rate").innerText =
-      data[cartData.cart[itemData].Name].Rate;
-    if (data[cartData.cart[itemData].Name].Stock < 10) {
-      clone
-        .querySelector("#count")
-        .setAttribute("max", data[cartData.cart[itemData].Name].Stock);
+  }else{
+    document.getElementById("cart-empty").src="";
+    document.getElementById("cart-empty").setAttribute("style","");
+    for (let itemData in cartData.cart) {
+      let clone = item.cloneNode(true);
+      clone.id = "item-" + cartData.cart[itemData].Name;
+      item.before(clone);
+      clone.querySelector("#item-name").innerText =
+        data[cartData.cart[itemData].Name].Name;
+      clone.querySelector("#item-rate").innerText =
+        data[cartData.cart[itemData].Name].Rate;
+      if (data[cartData.cart[itemData].Name].Stock < 10) {
+        clone
+          .querySelector("#count")
+          .setAttribute("max", data[cartData.cart[itemData].Name].Stock);
+      }
+      clone.querySelector("#buy").id = "buy-" + cartData.cart[itemData].Name;
+      clone.querySelector("#count").value = cartData.cart[itemData].Count;
+      clone.querySelector("#count").id = "count-" + cartData.cart[itemData].Name;
+      clone.querySelector("#item-image").src =
+        "../assets/" + cartData.cart[itemData].Name + ".jpg";
+      document.getElementById("all-item").appendChild(clone);
     }
-    clone.querySelector("#buy").id = "buy-" + cartData.cart[itemData].Name;
-    clone.querySelector("#count").value = cartData.cart[itemData].Count;
-    clone.querySelector("#count").id = "count-" + cartData.cart[itemData].Name;
-    clone.querySelector("#item-image").src =
-      "../assets/" + cartData.cart[itemData].Name + ".jpg";
-    document.getElementById("all-item").appendChild(clone);
   }
+  
 }
 
 function homeButtonClick() {

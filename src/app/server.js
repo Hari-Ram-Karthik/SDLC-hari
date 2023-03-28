@@ -139,60 +139,40 @@ app.post("/writeData", (req, res) => {
 });
 
 app.post("/addtocart", (req, res) => {
-  let obj = {
-    cart: [],
-  };
-  fs.exists("./assets/" + req.body.Username + ".json", function (doesExist) {
-    if (doesExist) {
-      fs.readFile(
-        "./assets/" + req.body.Username + ".json",
-        function readFileCallback(err, data) {
-          if (err) {
-            console.log(err);
-          } else {
-            obj = JSON.parse(data);
-            let added = false;
-            for (let cartDetails in obj.cart) {
-              if (obj.cart[cartDetails].Name == req.body.Name) {
-                obj.cart[cartDetails].Count += Number(req.body.Count);
-                added = true;
-              }
-            }
-            if (!added) {
-              obj.cart.push({
-                Name: req.body.Name,
-                Count: Number(req.body.Count),
-              });
-            }
-            let json = JSON.stringify(obj);
-            fs.writeFile(
-              "./assets/" + req.body.Username + ".json",
-              json,
-              (error) => {
-                if (error) {
-                  console.log(error);
-                  return;
-                }
-              }
-            );
+  fs.readFile(
+    "./assets/" + req.body.Username + ".json",
+    function readFileCallback(err, data) {
+      if (err) {
+        console.log(err);
+      } else {
+        obj = JSON.parse(data);
+        let added = false;
+        for (let cartDetails in obj.cart) {
+          if (obj.cart[cartDetails].Name == req.body.Name) {
+            obj.cart[cartDetails].Count += Number(req.body.Count);
+            added = true;
           }
         }
-      );
-    } else {
-      obj.cart.push({
-        Name: req.body.Name,
-        Count: Number(req.body.Count),
-      });
-      let json = JSON.stringify(obj);
-      console.log(json);
-      fs.writeFile("./assets/" + req.body.Username + ".json", json, (error) => {
-        if (error) {
-          console.log(error);
-          return;
+        if (!added) {
+          obj.cart.push({
+            Name: req.body.Name,
+            Count: Number(req.body.Count),
+          });
         }
-      });
+        let json = JSON.stringify(obj);
+        fs.writeFile(
+          "./assets/" + req.body.Username + ".json",
+          json,
+          (error) => {
+            if (error) {
+              console.log(error);
+              return;
+            }
+          }
+        );
+      }
     }
-  });
+  );
   res.json("bye");
   return;
 });

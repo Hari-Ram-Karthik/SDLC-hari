@@ -32,6 +32,9 @@ async function loginClick(){
       window.localStorage.setItem("Username",userName.value);
       window.location=parent.window.document.location.origin+"/homepage";
     }
+    else{
+      document.getElementById("warning").innerText="Invalid username or password"
+    }
 }
 
 async function signupClick(){

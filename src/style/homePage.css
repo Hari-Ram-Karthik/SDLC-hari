@@ -33,7 +33,7 @@ header {
   display: flex;
   flex-direction: row;
   height: 40px;
-  justify-content: flex-start;
+  justify-content: center;
 }
 
 .tab_item {
@@ -59,6 +59,7 @@ header {
   flex-direction: column;
   height: 450px;
   justify-content: space-around;
+  border-radius: 25px;
 }
 
 .item_image {
@@ -75,4 +76,8 @@ header {
   align-items: center;
   display: flex;
   flex-direction: column;
+}
+
+.cart-logout:hover{
+  font-size: large;
 }

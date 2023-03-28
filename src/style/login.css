@@ -12,7 +12,7 @@ p {
 .login {
   display: flex;
   flex-direction: column;
-  height: 52%;
+  height: 55%;
   justify-content: space-between;
   margin-top: 18%;
   padding-left: 10%;
