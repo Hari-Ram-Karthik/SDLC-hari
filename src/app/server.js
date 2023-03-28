@@ -46,8 +46,7 @@ app.post("/auth", (req, res) => {
   }
   if (isvalid != true) {
     isvalid = false;
-  }
-  else{
+  } else {
     let obj = {
       cart: [],
     };
@@ -77,12 +76,16 @@ app.post("/auth", (req, res) => {
       } else {
         let json = JSON.stringify(obj);
         console.log(json);
-        fs.writeFile("./assets/" + req.body.Username + ".json", json, (error) => {
-          if (error) {
-            console.log(error);
-            return;
+        fs.writeFile(
+          "./assets/" + req.body.Username + ".json",
+          json,
+          (error) => {
+            if (error) {
+              console.log(error);
+              return;
+            }
           }
-        });
+        );
       }
     });
   }
@@ -112,7 +115,7 @@ app.post("/loadCart", (req, res) => {
 });
 
 app.post("/load", (req, res) => {
-  let data=require("../assets/data.json");
+  let data = require("../assets/data.json");
   res.json(data);
   return;
 });

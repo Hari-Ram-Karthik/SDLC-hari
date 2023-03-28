@@ -32,13 +32,23 @@
     </div>
     <div class="items" id="all-item">
       <div class="item" id="item">
-        <p style="align-items: center;" id="item-name">Tomato</p>
-        <img src="../assets/tomato.jpg" class="item_image" id="item-image">
+        <p style="align-items: center" id="item-name">Tomato</p>
+        <img src="../assets/tomato.jpg" class="item_image" id="item-image" />
         <p id="item-rate">Rs: 100/kg</p>
         <p>Count</p>
-        <input type="number" onKeyDown="return false"  max="10" min="0" value="0" style="width: 40px" id="count"/>
-        <p style="color: red;" id="warning"></p>
-        <button id="add-to-cart" onclick="addtocart(this.id)">Add to Cart</button>
+        <input
+          type="number"
+          onKeyDown="return false"
+          max="10"
+          min="0"
+          value="0"
+          style="width: 40px"
+          id="count"
+        />
+        <p style="color: red" id="warning"></p>
+        <button id="add-to-cart" onclick="addtocart(this.id)">
+          Add to Cart
+        </button>
       </div>
     </div>
     <script src="../app/homePageScript.js"></script>

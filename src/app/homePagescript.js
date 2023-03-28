@@ -67,7 +67,8 @@ function createItems(category) {
         clone.querySelector("#warning").innerText = "Out of stock";
       } else if (data[itemData].Stock < 10) {
         clone.querySelector("#count").setAttribute("max", data[itemData].Stock);
-        clone.querySelector("#warning").innerText = "Only "+data[itemData].Stock+" left in stock";
+        clone.querySelector("#warning").innerText =
+          "Only " + data[itemData].Stock + " left in stock";
       }
       clone.querySelector("#add-to-cart").id = "add-to-cart-" + itemData;
       clone.querySelector("#count").id = "count-" + itemData;
@@ -92,7 +93,8 @@ function optonChange() {
         clone.querySelector("#warning").innerText = "Out of stock";
       } else if (data[itemData].Stock < 10) {
         clone.querySelector("#count").setAttribute("max", data[itemData].Stock);
-        clone.querySelector("#warning").innerText = "Only "+data[itemData].Stock+" left in stock";
+        clone.querySelector("#warning").innerText =
+          "Only " + data[itemData].Stock + " left in stock";
       }
       clone.querySelector("#add-to-cart").id = "add-to-cart-" + itemData;
       clone.querySelector("#count").id = "count-" + itemData;

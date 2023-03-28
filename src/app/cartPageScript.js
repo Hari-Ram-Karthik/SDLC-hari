@@ -46,13 +46,15 @@ async function loadData() {
 
 function loadCart() {
   document.getElementById("all-item").replaceChildren();
-  if(cartData.cart.length==0){
-    document.getElementById("cart-empty").src="../assets/cartEmpty.jpg";
-    document.getElementById("cart-empty").setAttribute("style","width: 100%; height: 85%; margin-top: -20px")
+  if (cartData.cart.length == 0) {
+    document.getElementById("cart-empty").src = "../assets/cartEmpty.jpg";
+    document
+      .getElementById("cart-empty")
+      .setAttribute("style", "width: 100%; height: 85%; margin-top: -20px");
     document.getElementById("buy-all-item").remove();
-  }else{
-    document.getElementById("cart-empty").src="";
-    document.getElementById("cart-empty").setAttribute("style","");
+  } else {
+    document.getElementById("cart-empty").src = "";
+    document.getElementById("cart-empty").setAttribute("style", "");
     for (let itemData in cartData.cart) {
       let clone = item.cloneNode(true);
       clone.id = "item-" + cartData.cart[itemData].Name;
@@ -68,13 +70,13 @@ function loadCart() {
       }
       clone.querySelector("#buy").id = "buy-" + cartData.cart[itemData].Name;
       clone.querySelector("#count").value = cartData.cart[itemData].Count;
-      clone.querySelector("#count").id = "count-" + cartData.cart[itemData].Name;
+      clone.querySelector("#count").id =
+        "count-" + cartData.cart[itemData].Name;
       clone.querySelector("#item-image").src =
         "../assets/" + cartData.cart[itemData].Name + ".jpg";
       document.getElementById("all-item").appendChild(clone);
     }
   }
-  
 }
 
 function homeButtonClick() {
@@ -103,9 +105,11 @@ function buyItem(id) {
 
 function buyAllItem() {
   for (let itemData in cartData.cart) {
-    data[ cartData.cart[itemData].Name].Stock-=document.getElementById("count-" + cartData.cart[itemData].Name).value;
+    data[cartData.cart[itemData].Name].Stock -= document.getElementById(
+      "count-" + cartData.cart[itemData].Name
+    ).value;
   }
-  cartData.cart.length=0;
+  cartData.cart.length = 0;
   writeData();
   loadCart();
 }

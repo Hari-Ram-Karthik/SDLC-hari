@@ -55,11 +55,11 @@ header {
 .item {
   align-items: center;
   background-color: antiquewhite;
+  border-radius: 25px;
   display: flex;
   flex-direction: column;
   height: 450px;
   justify-content: space-around;
-  border-radius: 25px;
 }
 
 .item_image {
@@ -67,7 +67,7 @@ header {
   width: 350px;
 }
 
-.item_image:hover{
+.item_image:hover {
   height: 210px;
   width: 360px;
 }
@@ -78,6 +78,6 @@ header {
   flex-direction: column;
 }
 
-.cart-logout:hover{
+.cart-logout:hover {
   font-size: large;
 }
