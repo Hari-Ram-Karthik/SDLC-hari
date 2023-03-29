@@ -6,33 +6,33 @@ const express = require("express");
 const app = express();
 app.use(express.json());
 const userData = [];
-const data = require("../assets/data.json");
+const data = require("./src/assets/data.json");
 const PORT = 9000;
 
 ///to send login page
 app.get("/", (req, res) => {
   userFileRead();
   app.use(express.static("./"));
-  res.sendFile(path.join(__dirname, "../view/login.html"));
+  res.sendFile(path.join(__dirname, "./src/view/login.html"));
 });
 
 ///to send homepage page
 app.get("/homepage", (req, res) => {
   userFileRead();
   app.use(express.static("./"));
-  res.sendFile(path.join(__dirname, "../view/homepage.html"));
+  res.sendFile(path.join(__dirname, "./src/view/homepage.html"));
 });
 
 ///to send signup page
 app.get("/signup", (req, res) => {
   app.use(express.static("./"));
-  res.sendFile(path.join(__dirname, "../view/signup.html"));
+  res.sendFile(path.join(__dirname, "./src/view/signup.html"));
 });
 
 ///to send cart page
 app.get("/cart", (req, res) => {
   app.use(express.static("./"));
-  res.sendFile(path.join(__dirname, "../view/cartpage.html"));
+  res.sendFile(path.join(__dirname, "./src/view/cartpage.html"));
 });
 
 ///to verify username and password and create cart file if doesnot exist
@@ -52,10 +52,10 @@ app.post("/auth", (req, res) => {
     let obj = {
       cart: [],
     };
-    fs.exists("./assets/" + req.body.Username + ".json", function (doesExist) {
+    fs.exists("./src/assets/" + req.body.Username + ".json", function (doesExist) {
       if (doesExist) {
         fs.readFile(
-          "./assets/" + req.body.Username + ".json",
+          "./src/assets/" + req.body.Username + ".json",
           function readFileCallback(err, data) {
             if (err) {
               console.log(err);
@@ -63,7 +63,7 @@ app.post("/auth", (req, res) => {
               obj = JSON.parse(data);
               let json = JSON.stringify(obj);
               fs.writeFile(
-                "./assets/" + req.body.Username + ".json",
+                "./src/assets/" + req.body.Username + ".json",
                 json,
                 (error) => {
                   if (error) {
@@ -78,7 +78,7 @@ app.post("/auth", (req, res) => {
       } else {
         let json = JSON.stringify(obj);
         fs.writeFile(
-          "./assets/" + req.body.Username + ".json",
+          "./src/assets/" + req.body.Username + ".json",
           json,
           (error) => {
             if (error) {
@@ -98,7 +98,7 @@ app.post("/auth", (req, res) => {
 app.post("/newuser", (req, res) => {
   const csv = `\n${req.body.Name},${req.body.MailId},${req.body.Password}`;
   try {
-    appendFileSync(path.join(__dirname, "../assets/user.csv"), csv);
+    appendFileSync(path.join(__dirname, "./src/assets/user.csv"), csv);
     message = "ok";
   } catch (err) {
     console.error(err);
@@ -111,14 +111,14 @@ app.post("/newuser", (req, res) => {
 
 ///to send cart data
 app.post("/loadCart", (req, res) => {
-  let cartData = require("../assets/" + req.body.Username + ".json");
+  let cartData = require("./src/assets/" + req.body.Username + ".json");
   res.json(cartData);
   return;
 });
 
 ///to senditem data
 app.post("/load", (req, res) => {
-  let data = require("../assets/data.json");
+  let data = require("./src/assets/data.json");
   res.json(data);
   return;
 });
@@ -126,7 +126,7 @@ app.post("/load", (req, res) => {
 ///to send write items to file
 app.post("/writeData", (req, res) => {
   fs.writeFile(
-    "./assets/" + req.body.Username + ".json",
+    "./src/assets/" + req.body.Username + ".json",
     JSON.stringify(req.body.CartData),
     (error) => {
       if (error) {
@@ -135,7 +135,7 @@ app.post("/writeData", (req, res) => {
       }
     }
   );
-  fs.writeFile("./assets/data.json", JSON.stringify(req.body.Data), (error) => {
+  fs.writeFile("./src/assets/data.json", JSON.stringify(req.body.Data), (error) => {
     if (error) {
       console.log(error);
       return;
@@ -148,7 +148,7 @@ app.post("/writeData", (req, res) => {
 ///to add items in cart file
 app.post("/addtocart", (req, res) => {
   fs.readFile(
-    "./assets/" + req.body.Username + ".json",
+    "./src/assets/" + req.body.Username + ".json",
     function readFileCallback(err, data) {
       if (err) {
         console.log(err);
@@ -169,7 +169,7 @@ app.post("/addtocart", (req, res) => {
         }
         let json = JSON.stringify(obj);
         fs.writeFile(
-          "./assets/" + req.body.Username + ".json",
+          "./src/assets/" + req.body.Username + ".json",
           json,
           (error) => {
             if (error) {
@@ -190,7 +190,7 @@ app.post("/addtocart", (req, res) => {
  */
 function userFileRead() {
   userData.length = 0;
-  fs.createReadStream(path.join(__dirname, "../assets/user.csv"))
+  fs.createReadStream(path.join(__dirname, "./src/assets/user.csv"))
     .pipe(parse({ delimiter: ",", columns: true, ltrim: true }))
     .on("data", function (row) {
       userData.push(row);

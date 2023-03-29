@@ -54,7 +54,7 @@ async function loadData() {
 function loadCart() {
   document.getElementById("all-item").replaceChildren();
   if (cartData.cart.length == 0) {
-    document.getElementById("cart-empty").src = "../assets/cartEmpty.jpg";
+    document.getElementById("cart-empty").src = "./src/assets/cartEmpty.jpg";
     document
       .getElementById("cart-empty")
       .setAttribute("style", "width: 100%; height: 85%; margin-top: -20px");
@@ -80,7 +80,7 @@ function loadCart() {
       clone.querySelector("#count").id =
         "count-" + cartData.cart[itemData].Name;
       clone.querySelector("#item-image").src =
-        "../assets/" + cartData.cart[itemData].Name + ".jpg";
+        "./src/assets/" + cartData.cart[itemData].Name + ".jpg";
       document.getElementById("all-item").appendChild(clone);
     }
   }

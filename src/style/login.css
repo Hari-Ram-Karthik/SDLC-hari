@@ -1,5 +1,5 @@
 body {
-  background-image: url(../assets/login_background.jpg);
+  background-image: url(./src/assets/login_background.jpg);
   background-repeat: no-repeat;
   background-size: cover;
 }

@@ -77,7 +77,7 @@ function createItems(category) {
       }
       clone.querySelector("#add-to-cart").id = "add-to-cart-" + itemData;
       clone.querySelector("#count").id = "count-" + itemData;
-      clone.querySelector("#item-image").src = "../assets/" + itemData + ".jpg";
+      clone.querySelector("#item-image").src = "./src/assets/" + itemData + ".jpg";
       document.getElementById("all-item").appendChild(clone);
     }
   }
@@ -106,7 +106,7 @@ function optonChange() {
       }
       clone.querySelector("#add-to-cart").id = "add-to-cart-" + itemData;
       clone.querySelector("#count").id = "count-" + itemData;
-      clone.querySelector("#item-image").src = "../assets/" + itemData + ".jpg";
+      clone.querySelector("#item-image").src = "./src/assets/" + itemData + ".jpg";
       document.getElementById("all-item").appendChild(clone);
     }
   }
