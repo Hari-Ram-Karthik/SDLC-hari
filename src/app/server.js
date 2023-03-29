@@ -5,35 +5,37 @@ const path = require("path");
 const express = require("express");
 const app = express();
 app.use(express.json());
-//let user;
 const userData = [];
 const data = require("../assets/data.json");
 const PORT = 9000;
 
-///to send html page
+///to send login page
 app.get("/", (req, res) => {
   userFileRead();
   app.use(express.static("./"));
   res.sendFile(path.join(__dirname, "../view/login.html"));
 });
 
+///to send homepage page
 app.get("/homepage", (req, res) => {
   userFileRead();
   app.use(express.static("./"));
   res.sendFile(path.join(__dirname, "../view/homepage.html"));
 });
 
+///to send signup page
 app.get("/signup", (req, res) => {
   app.use(express.static("./"));
   res.sendFile(path.join(__dirname, "../view/signup.html"));
 });
 
+///to send cart page
 app.get("/cart", (req, res) => {
   app.use(express.static("./"));
   res.sendFile(path.join(__dirname, "../view/cartpage.html"));
 });
 
-///to verify username and password
+///to verify username and password and create cart file if doesnot exist
 app.post("/auth", (req, res) => {
   let isvalid;
   for (let user in userData) {
@@ -75,7 +77,6 @@ app.post("/auth", (req, res) => {
         );
       } else {
         let json = JSON.stringify(obj);
-        console.log(json);
         fs.writeFile(
           "./assets/" + req.body.Username + ".json",
           json,
@@ -93,6 +94,7 @@ app.post("/auth", (req, res) => {
   return;
 });
 
+///to add user
 app.post("/newuser", (req, res) => {
   const csv = `\n${req.body.Name},${req.body.MailId},${req.body.Password}`;
   try {
@@ -102,24 +104,26 @@ app.post("/newuser", (req, res) => {
     console.error(err);
     message = "no";
   }
-  //user = req.body.userName;
   userFileRead();
   res.json(message);
   return;
 });
 
+///to send cart data
 app.post("/loadCart", (req, res) => {
   let cartData = require("../assets/" + req.body.Username + ".json");
   res.json(cartData);
   return;
 });
 
+///to senditem data
 app.post("/load", (req, res) => {
   let data = require("../assets/data.json");
   res.json(data);
   return;
 });
 
+///to send write items to file
 app.post("/writeData", (req, res) => {
   fs.writeFile(
     "./assets/" + req.body.Username + ".json",
@@ -141,6 +145,7 @@ app.post("/writeData", (req, res) => {
   return;
 });
 
+///to add items in cart file
 app.post("/addtocart", (req, res) => {
   fs.readFile(
     "./assets/" + req.body.Username + ".json",
@@ -180,6 +185,9 @@ app.post("/addtocart", (req, res) => {
   return;
 });
 
+/**
+ *to read user details
+ */
 function userFileRead() {
   userData.length = 0;
   fs.createReadStream(path.join(__dirname, "../assets/user.csv"))
@@ -191,10 +199,10 @@ function userFileRead() {
       console.log(error.message);
     })
     .on("end", function () {
-      console.log("parsed csv userData:");
-      console.log(userData);
     });
 }
+
+///to listen to port
 app.listen(PORT, (error) => {
   if (error) console.log("Error occurred, server can't start", error);
 });

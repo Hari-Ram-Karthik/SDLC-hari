@@ -5,7 +5,7 @@ let password = document.getElementById("password");
 let isvalid;
 
 /**
- *Function to login click
+ *Function to verify user when login is clicked
  */
 async function loginClick() {
   var myHeaders = new Headers();
@@ -37,6 +37,9 @@ async function loginClick() {
   }
 }
 
+/**
+ *Function to execute when sign up button is clicked
+ */
 async function signupClick() {
   window.location = parent.window.document.location.origin + "/signup";
 }

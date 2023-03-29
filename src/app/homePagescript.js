@@ -1,11 +1,3 @@
-let item = document.querySelector("#item");
-let data = [];
-let vegetable = [];
-let fruits = [];
-let cookware = [];
-let others = [];
-let isvalid;
-
 document.querySelector("#search-bar").addEventListener("change", optonChange);
 document.getElementById("all-button").addEventListener("click", allButtonClick);
 document
@@ -22,13 +14,24 @@ document
   .addEventListener("click", otherButtonClick);
 document.getElementById("cart").addEventListener("click", cartButtonClick);
 document.getElementById("logout").addEventListener("click", logoutButtonClick);
+
+let item = document.querySelector("#item");
 let itemOptions = document.getElementById("items");
 let optionSelected = document.getElementById("search-bar");
+let data = [];
+let vegetable = [];
+let fruits = [];
+let cookware = [];
+let others = [];
+let isvalid;
 
 (function () {
   loadData();
 })();
 
+/**
+ *Function to load data from server
+ */
 async function loadData() {
   var myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
@@ -44,7 +47,6 @@ async function loadData() {
       alert("Error couldn't read data from server", error);
       location.reload();
     });
-  console.log(data);
   itemOptions.innerHTML = "";
   for (let itemData in data) {
     itemOptions.innerHTML =
@@ -53,6 +55,9 @@ async function loadData() {
   allButtonClick();
 }
 
+/**
+ *Function to load data to the page(displaying items)
+ */
 function createItems(category) {
   document.getElementById("all-item").replaceChildren();
   for (let itemData in data) {
@@ -78,6 +83,9 @@ function createItems(category) {
   }
 }
 
+/**
+ *Function to load data to the page(displaying items) when search bar is used
+ */
 function optonChange() {
   allButtonClick();
   for (let itemData in data) {
@@ -104,6 +112,9 @@ function optonChange() {
   }
 }
 
+/**
+ *Function to execute when all button is clicked
+ */
 function allButtonClick() {
   createItems("all");
   document
@@ -123,6 +134,9 @@ function allButtonClick() {
     .setAttribute("style", "background-color:azure");
 }
 
+/**
+ *Function to execute when vegetable button is clicked
+ */
 function vegetableButtonClick() {
   createItems("Vegetables");
   document
@@ -142,6 +156,9 @@ function vegetableButtonClick() {
     .setAttribute("style", "background-color:azure");
 }
 
+/**
+ *Function to execute when fruits button is clicked
+ */
 function fruitButtonClick() {
   createItems("Fruits");
   document
@@ -161,6 +178,9 @@ function fruitButtonClick() {
     .setAttribute("style", "background-color:azure");
 }
 
+/**
+ *Function to execute when cookware button is clicked
+ */
 function cookwareButtonClick() {
   createItems("Cookware");
   document
@@ -180,6 +200,9 @@ function cookwareButtonClick() {
     .setAttribute("style", "background-color:azure");
 }
 
+/**
+ *Function to execute when others button is clicked
+ */
 function otherButtonClick() {
   createItems("Others");
   document
@@ -199,14 +222,24 @@ function otherButtonClick() {
     .setAttribute("style", "background-color:cyan");
 }
 
+/**
+ *Function to execute when cart button is clicked
+ */
 function cartButtonClick() {
   window.location = parent.window.document.location.origin + "/cart";
 }
 
+/**
+ *Function to execute when logout button is clicked
+ */
 function logoutButtonClick() {
   window.location = parent.window.document.location.origin;
 }
 
+/**
+ *Function to execute when add to cart button is clicked
+ * Update data to server
+ */
 async function addtocart(id) {
   let countId = "count-" + id.split("-")[3];
   var myHeaders = new Headers();

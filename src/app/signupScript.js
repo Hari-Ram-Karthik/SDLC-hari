@@ -7,12 +7,16 @@ let confirmPassword = document.getElementById("confirmpassword");
 let message;
 
 /**
- *Function to login click
+ *Function to execute when login button is clicked
  */
 async function loginClick() {
   window.location = parent.window.document.location.origin;
 }
 
+/**
+ *Function to execute when signup button is clicked
+ *Verifies all fields and creates user and update the same to server
+ */
 async function signupClick() {
   if (
     name_.value == "" ||

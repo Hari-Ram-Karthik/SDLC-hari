@@ -1,14 +1,18 @@
 document.getElementById("home").addEventListener("click", homeButtonClick);
 document.getElementById("logout").addEventListener("click", logoutButtonClick);
-let item = document.querySelector("#item");
 
+let item = document.querySelector("#item");
 let data;
 let result;
 let cartData;
+
 (function () {
   loadData();
 })();
 
+/**
+ *Function to load data from server
+ */
 async function loadData() {
   var myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
@@ -44,6 +48,9 @@ async function loadData() {
   await loadCart();
 }
 
+/**
+ *Function to load items in cart
+ */
 function loadCart() {
   document.getElementById("all-item").replaceChildren();
   if (cartData.cart.length == 0) {
@@ -79,14 +86,23 @@ function loadCart() {
   }
 }
 
+/**
+ *Fumction to execute when home button is clicked
+ */
 function homeButtonClick() {
   window.location = parent.window.document.location.origin + "/homepage";
 }
 
+/**
+ *Fumction to execute when logout button is clicked
+ */
 function logoutButtonClick() {
   window.location = parent.window.document.location.origin;
 }
 
+/**
+ *Fumction to execute when buy button is clicked
+ */
 function buyItem(id) {
   let name = id.split("-")[1];
   for (let itemData in cartData.cart) {
@@ -103,6 +119,9 @@ function buyItem(id) {
   loadCart();
 }
 
+/**
+ *Fumction to execute when buy all button is clicked
+ */
 function buyAllItem() {
   for (let itemData in cartData.cart) {
     data[cartData.cart[itemData].Name].Stock -= document.getElementById(
@@ -114,6 +133,9 @@ function buyAllItem() {
   loadCart();
 }
 
+/**
+ *Fumction to update server after buying items
+ */
 async function writeData() {
   var myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
