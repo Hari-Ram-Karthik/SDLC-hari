@@ -1,0 +1,28 @@
+<html>
+  <head>
+    <link rel="stylesheet" href="./src/style/login.css" />
+  </head>
+  <body>
+    <div class="login">
+      <p>USERNAME</p>
+      <input
+        type="text"
+        class="input"
+        placeholder="Name or nickname"
+        id="username"
+      />
+      <p>PASSWORD</p>
+      <input
+        type="password"
+        class="input"
+        style="margin-top: -6%"
+        id="password"
+        onpaste="return false"
+      />
+      <p style="margin-left: 35%" id="login">LOGIN</p>
+      <p id="signup">Dont have a account?Signup</p>
+    </div>
+    <p style="color: red; margin-left: 122px" id="warning"></p>
+    <script src="./src/app/loginScript.js"></script>
+  </body>
+</html>

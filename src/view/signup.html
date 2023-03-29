@@ -1,0 +1,43 @@
+<html>
+  <head>
+    <link rel="stylesheet" href="./src/style/signup.css" />
+  </head>
+  <body>
+    <div class="signup">
+      <p>MAILID</p>
+      <input
+        type="text"
+        class="input"
+        placeholder="yourmailid@gmail.com"
+        id="mailid"
+      />
+      <p>NAME</p>
+      <input
+        type="text"
+        class="input"
+        placeholder="Name or nickname"
+        id="name"
+      />
+      <p>PASSWORD</p>
+      <input
+        type="password"
+        class="input"
+        style="margin-top: -6%"
+        id="password"
+        onpaste="return false"
+      />
+      <p>CONFIRM PASSWORD</p>
+      <input
+        type="password"
+        class="input"
+        style="margin-top: -6%"
+        id="confirmpassword"
+        onpaste="return false"
+      />
+      <p style="margin-left: 35%" id="signup">SIGNUP</p>
+      <p id="login">Have a account?Login</p>
+    </div>
+    <p style="color: red; margin-left: 122px" id="warning"></p>
+    <script src="./src/app/signupScript.js"></script>
+  </body>
+</html>

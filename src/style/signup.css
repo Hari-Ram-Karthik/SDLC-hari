@@ -1,0 +1,25 @@
+body {
+  background-image: url(./src/assets/login_background.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+p {
+  font-size: 20px;
+  font-weight: bolder;
+}
+
+.signup {
+  display: flex;
+  flex-direction: column;
+  height: 60%;
+  justify-content: space-between;
+  margin-top: 13%;
+  padding-left: 10%;
+  width: 23%;
+}
+
+.input {
+  height: 10%;
+  width: 100%;
+}
